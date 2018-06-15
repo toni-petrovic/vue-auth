@@ -63,10 +63,10 @@ module.exports = function () {
 
     function _transitionEach(transition, routeAuth, cb) {
         routeAuth = __utils.toArray(routeAuth);
-        
+
         __transitionPrev = __transitionThis;
         __transitionThis = transition;
-        
+
         if (routeAuth && (routeAuth === true || routeAuth.constructor === Array)) {
             if ( ! this.check()) {
                 __transitionRedirecType = 401;
@@ -356,7 +356,7 @@ module.exports = function () {
 
         rolesVar:          'roles',
         tokenName:         'auth-token',
-        
+
         // Objects
 
         authRedirect:       {path: '/login'},
@@ -430,7 +430,7 @@ module.exports = function () {
 
     function Auth(Vue, options) {
         var i, ii, msg, drivers = ['auth', 'http', 'router'];
-        
+
         this.currentToken = null;
 
         this.options = __utils.extend(defaultOptions, [options || {}]);
@@ -506,8 +506,9 @@ module.exports = function () {
         }
     };
 
-    Auth.prototype.token = function (name) {
-        return __token.get.call(this, name);
+    Auth.prototype.token = function (name, token) {
+        if (token) __token.set.call(this, name, token);
+        else return __token.get.call(this, name);
     };
 
     Auth.prototype.fetch = function (data) {
@@ -540,7 +541,7 @@ module.exports = function () {
 
     Auth.prototype.oauth2 = function (data) {
         __bindContext.call(this, 'oauth2', data);
-    }    
+    }
 
     return Auth;
 };
